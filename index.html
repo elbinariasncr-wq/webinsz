@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booster TikTok</title>
+
+  <style>
+    :root {
+      --bg: #050816;
+      --card: rgba(15, 23, 42, .78);
+      --card2: rgba(30, 41, 59, .75);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --line: rgba(255,255,255,.09);
+      --accent: #8b5cf6;
+      --accent2: #06b6d4;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #facc15;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(139,92,246,.35), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(6,182,212,.25), transparent 35%),
+        linear-gradient(135deg, #020617, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      overflow-x: hidden;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1120px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: 26px;
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 30px rgba(139,92,246,.45);
+    }
+
+    .brand small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .telegram {
+      color: var(--text);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    .telegram:hover {
+      background: rgba(255,255,255,.12);
+      transform: translateY(-1px);
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1.02;
+      margin: 0 0 14px;
+      letter-spacing: -1.5px;
+    }
+
+    .grad {
+      background: linear-gradient(90deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+      margin-bottom: 22px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+    }
+
+    .stat b {
+      font-size: 22px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .form {
+      padding: 26px;
+      background: rgba(2, 6, 23, .24);
+    }
+
+    .step-indicator {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .dot {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .dot.active {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .card {
+      display: none;
+      animation: fade .25s ease;
+    }
+
+    .card.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      outline: none;
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      font-size: 15px;
+      transition: .25s;
+    }
+
+    input:focus {
+      border-color: rgba(139,92,246,.75);
+      box-shadow: 0 0 0 4px rgba(139,92,246,.12);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 9px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .option, .pkg {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: .25s;
+      user-select: none;
+    }
+
+    .option:hover, .pkg:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.075);
+    }
+
+    .option.active, .pkg.selected {
+      border-color: rgba(139,92,246,.75);
+      background: linear-gradient(135deg, rgba(139,92,246,.22), rgba(6,182,212,.08));
+      box-shadow: 0 12px 35px rgba(139,92,246,.13);
+    }
+
+    .option b, .pkg b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .option span, .pkg span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pkg.disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .pkg.disabled:hover {
+      transform: none;
+      background: rgba(255,255,255,.045);
+    }
+
+    .summary {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+      line-height: 1.8;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      padding: 13px 18px;
+      border-radius: 15px;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 28px rgba(139,92,246,.22);
+      transition: .25s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    button.ghost {
+      background: rgba(255,255,255,.06);
+      box-shadow: none;
+      border: 1px solid var(--line);
+    }
+
+    .status {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress {
+      display: none;
+      margin-top: 18px;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--green));
+      transition: width .4s;
+    }
+
+    .terminal {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.34);
+      border: 1px solid var(--line);
+      color: #86efac;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      min-height: 116px;
+      white-space: pre-line;
+    }
+
+    .side {
+      padding: 24px;
+    }
+
+    .glass-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+
+    .glass-card h3 {
+      margin: 0 0 8px;
+    }
+
+    .glass-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(34,197,94,.13);
+      color: #86efac;
+      font-size: 12px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(34,197,94,.18);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      padding: 20px;
+    }
+
+    .modal-box {
+      width: min(380px, 100%);
+      padding: 30px;
+      text-align: center;
+      border-radius: 24px;
+      background: #0f172a;
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 90px rgba(0,0,0,.6);
+    }
+
+    .check {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(34,197,94,.14);
+      color: var(--green);
+      font-size: 42px;
+    }
+
+    @media (max-width: 880px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .stats, .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+
+      .status {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section class="panel hero">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">JS</div>
+          <div>
+            <b>Booster Tools</b><br>
+            <small>Made by QwertyDear</small>
+          </div>
+        </div>
+
+        <a class="telegram" href="https://t.me/clopc" target="_blank">Telegram</a>
+      </div>
+
+      <h1>Booster TikTok <span class="grad">Full Release</span></h1>
+      <p class="lead">
+        Platform boost TikTok dengan tampilan modern, proses cepat, pilihan paket fleksibel,
+        dan sistem cooldown otomatis agar penggunaan tetap stabil.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <b>Fast</b>
+          <span>Processing system</span>
+        </div>
+        <div class="stat">
+          <b>Auto</b>
+          <span>Queue manager</span>
+        </div>
+        <div class="stat">
+          <b>Free</b>
+          <span>Regular access</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel form">
+      <div class="step-indicator">
+        <div class="dot active" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot3"></div>
+      </div>
+
+      <div class="card active" id="step1">
+        <label>Username TikTok</label>
+        <input type="text" id="username" placeholder="Contoh: @usernamekamu">
+        <div class="hint">Username wajib diawali dengan karakter @</div>
+
+        <div class="actions">
+          <button id="next1">Next</button>
+        </div>
+      </div>
+
+      <div class="card" id="step2">
+        <label>Pilih jenis boost</label>
+
+        <div class="grid" id="boostOptions">
+          <div class="option" data-key="Followers">
+            <b>Followers</b>
+            <span>Tambah pengikut</span>
+          </div>
+          <div class="option" data-key="Likes">
+            <b>Likes</b>
+            <span>Tambah suka</span>
+          </div>
+          <div class="option" data-key="Views">
+            <b>Views</b>
+            <span>Tambah tayangan</span>
+          </div>
+          <div class="option" data-key="Favorites">
+            <b>Favorites</b>
+            <span>Tambah favorit</span>
+          </div>
+          <div class="option" data-key="Shares">
+            <b>Shares</b>
+            <span>Tambah share</span>
+          </div>
+          <div class="option" data-key="Profile Visit">
+            <b>Profile Visit</b>
+            <span>Tambah kunjungan</span>
+          </div>
+        </div>
+
+        <label id="videoLinkLabel" style="margin-top:18px; display:none;">Link VT TikTok</label>
+        <input
+          type="url"
+          id="videoLink"
+          placeholder="https://vt.tiktok.com/xxxxxx/"
+          style="display:none;"
+        >
+        <div class="hint" id="videoLinkHint" style="display:none;">
+          Wajib diisi kalau memilih Likes, Views, Favorites, atau Shares. Link harus diawali https://vt.tiktok.com/
+        </div>
+
+        <label style="margin-top:18px">Pilih paket</label>
+
+        <div class="grid">
+          <div class="pkg disabled">
+            <b>VVIP (🟢 ACTIVE)</b>
+            <span>Premium Access</span>
+          </div>
+          <div class="pkg" data-package="REGULER">
+            <b>REGULER (MT 🟡)</b>
+            <span>Top Choice</span>
+          </div>
+          <div class="pkg" data-package="NORMAL">
+            <b>NORMAL (MT 🟡)</b>
+            <span>Economic Choice</span>
+          </div>
+          <div class="pkg" data-package="TRIAL">
+            <b>TRIAL (MT 🟡)</b>
+            <span>Testing Mode Trial</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="ghost" id="back1">Back</button>
+          <button id="next2">Lanjut</button>
+        </div>
+      </div>
+
+      <div class="card" id="step3">
+        <label>Ringkasan Boost</label>
+        <div class="summary" id="summary">Belum ada pilihan.</div>
+
+        <div class="actions">
+          <button id="start">Mulai Boost</button>
+          <button class="ghost" id="reset">Reset</button>
+          <div class="status" id="status">Ready</div>
+        </div>
+
+        <div class="progress" id="progress">
+          <div class="bar"><span id="barFill"></span></div>
+          <div class="terminal" id="terminal">Menunggu proses...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel side">
+      <div class="glass-card">
+        <span class="badge">System Online</span>
+        <h3>Server Status</h3>
+        <p>Queue berjalan normal. Gunakan fitur boost dengan jeda cooldown agar sistem tetap stabil.</p>
+      </div>
+
+      <div class="glass-card">
+        <h3>Info Paket</h3>
+        <p>REGULER cocok untuk proses cepat, NORMAL untuk penggunaan ringan, dan TRIAL untuk percobaan.</p>
+      </div>
+
+      <div class="glass-card">
+        <h3>Catatan</h3>
+        <p>Pastikan username benar sebelum memulai proses. Jika memilih boost untuk video, pastikan link VT TikTok sudah benar.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="check">✓</div>
+      <h2>Boost Successfully</h2>
+      <p style="color:var(--muted)">Request berhasil diproses ke sistem.</p>
+    </div>
+  </div>
+
+  <script>
+    const username = document.getElementById("username");
+    const videoLink = document.getElementById("videoLink");
+    const videoLinkLabel = document.getElementById("videoLinkLabel");
+    const videoLinkHint = document.getElementById("videoLinkHint");
+
+    const boostOptions = document.getElementById("boostOptions");
+    const summary = document.getElementById("summary");
+    const statusText = document.getElementById("status");
+    const progress = document.getElementById("progress");
+    const terminal = document.getElementById("terminal");
+    const barFill = document.getElementById("barFill");
+    const modal = document.getElementById("modal");
+
+    const needVideoLinkBoosts = ["Likes", "Views", "Favorites", "Shares"];
+
+    let selectedPackage = "";
+    let cooldown = false;
+
+    function showStep(num) {
+      document.querySelectorAll(".card").forEach(card => card.classList.remove("active"));
+      document.getElementById("step" + num).classList.add("active");
+
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById("dot" + i).classList.toggle("active", i <= num);
+      }
+    }
+
+    function getSelectedBoosts() {
+      return [...document.querySelectorAll(".option.active")].map(x => x.dataset.key);
+    }
+
+    function isVideoLinkRequired() {
+      const boosts = getSelectedBoosts();
+      return boosts.some(boost => needVideoLinkBoosts.includes(boost));
+    }
+
+    function updateVideoLinkVisibility() {
+      const needVideoLink = isVideoLinkRequired();
+
+      videoLink.style.display = needVideoLink ? "block" : "none";
+      videoLinkLabel.style.display = needVideoLink ? "block" : "none";
+      videoLinkHint.style.display = needVideoLink ? "block" : "none";
+
+      if (!needVideoLink) {
+        videoLink.value = "";
+      }
+    }
+
+    document.getElementById("next1").onclick = () => {
+      const value = username.value.trim();
+
+      if (!value) {
+        alert("Username wajib diisi.");
+        return;
+      }
+
+      if (!value.startsWith("@")) {
+        alert('Username harus diawali "@". Contoh: @usernamekamu');
+        return;
+      }
+
+      showStep(2);
+    };
+
+    document.getElementById("back1").onclick = () => showStep(1);
+
+    boostOptions.onclick = e => {
+      const option = e.target.closest(".option");
+      if (!option) return;
+
+      option.classList.toggle("active");
+      updateVideoLinkVisibility();
+    };
+
+    document.querySelectorAll(".pkg").forEach(pkg => {
+      if (pkg.classList.contains("disabled")) return;
+
+      pkg.onclick = () => {
+        document.querySelectorAll(".pkg").forEach(p => p.classList.remove("selected"));
+        pkg.classList.add("selected");
+        selectedPackage = pkg.dataset.package;
+      };
+    });
+
+    document.getElementById("next2").onclick = () => {
+      const boosts = getSelectedBoosts();
+      const needVideoLink = isVideoLinkRequired();
+      const linkValue = videoLink.value.trim();
+
+      if (boosts.length === 0) {
+        alert("Pilih minimal satu jenis boost.");
+        return;
+      }
+
+      if (needVideoLink) {
+        if (!linkValue) {
+          alert("Link VT TikTok wajib diisi untuk Likes, Views, Favorites, atau Shares.");
+          return;
+        }
+
+        if (!linkValue.startsWith("https://vt.tiktok.com/")) {
+          alert("Link VT TikTok wajib diawali https://vt.tiktok.com/");
+          return;
+        }
+      }
+
+      if (!selectedPackage) {
+        alert("Pilih salah satu paket terlebih dahulu.");
+        return;
+      }
+
+      summary.innerHTML = `
+        <b>Username:</b> ${escapeHtml(username.value.trim())}<br>
+        ${needVideoLink ? `<b>Link VT:</b> ${escapeHtml(linkValue)}<br>` : ""}
+        <b>Jenis Boost:</b> ${boosts.map(escapeHtml).join(", ")}<br>
+        <b>Paket:</b> ${escapeHtml(selectedPackage)}<br>
+        <b>Status:</b> Siap diproses
+      `;
+
+      showStep(3);
+    };
+
+    document.getElementById("start").onclick = () => {
+      if (cooldown) return;
+
+      cooldown = true;
+      progress.style.display = "block";
+      barFill.style.width = "0%";
+      statusText.textContent = "Connecting...";
+      terminal.textContent = "";
+
+      const logs = [
+        "[SYSTEM] Initializing request...",
+        "[SERVER] Checking username format...",
+        "[QUEUE] Adding task to queue...",
+        "[API] Connecting to boost gateway...",
+        "[SECURITY] Validating session...",
+        "[PROCESS] Running boost task...",
+        "[ERR] Method is under maintenance."
+      ];
+
+      let i = 0;
+      let percent = 0;
+
+      const run = setInterval(() => {
+        if (i < logs.length) {
+          terminal.textContent += logs[i] + "\n";
+          i++;
+        }
+
+        percent += Math.floor(Math.random() * 18) + 10;
+        if (percent > 100) percent = 100;
+        barFill.style.width = percent + "%";
+
+        if (percent >= 100) {
+          clearInterval(run);
+
+          const boosts = getSelectedBoosts().join(", ");
+
+          fetch("/api/telegram", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              username: username.value.trim(),
+              link: videoLink.value.trim(),
+              boost: boosts,
+              paket: selectedPackage
+            })
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (!data.ok) throw new Error(data.message || "Gagal kirim Telegram");
+
+              statusText.textContent = "Success";
+              modal.style.display = "flex";
+              setTimeout(() => modal.style.display = "none", 1700);
+              setCooldown(45);
+            })
+            .catch(err => {
+              statusText.textContent = "Telegram Error";
+              terminal.textContent += `\n[API] ${err.message}`;
+              cooldown = false;
+            });
+        }
+      }, 650);
+    };
+
+    document.getElementById("reset").onclick = () => {
+      if (cooldown) return;
+
+      username.value = "";
+      videoLink.value = "";
+      videoLink.style.display = "none";
+      videoLinkLabel.style.display = "none";
+      videoLinkHint.style.display = "none";
+
+      selectedPackage = "";
+      summary.textContent = "Belum ada pilihan.";
+      progress.style.display = "none";
+      barFill.style.width = "0%";
+      terminal.textContent = "Menunggu proses...";
+
+      document.querySelectorAll(".option").forEach(o => o.classList.remove("active"));
+      document.querySelectorAll(".pkg").forEach(p => p.classList.remove("selected"));
+
+      showStep(1);
+    };
+
+    function setCooldown(seconds) {
+      const cooldownUntil = Date.now() + seconds * 1000;
+      localStorage.setItem("cooldownUntil", cooldownUntil);
+      startCooldown();
+    }
+
+    function startCooldown() {
+      const cooldownUntil = Number(localStorage.getItem("cooldownUntil"));
+
+      const cd = setInterval(() => {
+        const left = Math.ceil((cooldownUntil - Date.now()) / 1000);
+
+        if (left > 0) {
+          cooldown = true;
+          statusText.textContent = `Cooldown ${left}s`;
+        } else {
+          clearInterval(cd);
+          cooldown = false;
+          localStorage.removeItem("cooldownUntil");
+          statusText.textContent = "Ready";
+        }
+      }, 1000);
+    }
+
+    window.addEventListener("load", () => {
+      const cooldownUntil = Number(localStorage.getItem("cooldownUntil"));
+
+      if (cooldownUntil && cooldownUntil > Date.now()) {
+        cooldown = true;
+        startCooldown();
+      }
+
+      updateVideoLinkVisibility();
+    });
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+  </script>
+</body>
+</html>
